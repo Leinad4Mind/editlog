@@ -17,6 +17,7 @@ use phpbb\db\driver\driver_interface;
 use phpbb\log\log;
 use phpbb\request\request;
 use phpbb\template\template;
+use phpbb\language\language;
 use phpbb\user;
 
 class editlog
@@ -42,6 +43,9 @@ class editlog
     /* @var \phpbb\template\template */
     protected $template;
 
+    /* @var \phpbb\language\language */
+    protected $language;
+
     /* @var \phpbb\user */
     protected $user;
 
@@ -57,21 +61,22 @@ class editlog
     /**
      * Constructor
      *
-     * @param \phpbb\auth\auth $auth
-     * @param \phpbb\config\config $config
-     * @param \phpbb\controller\helper $helper
-     * @param \phpbb\db\driver\driver_interface $db
-     * @param \phpbb\log\log $log
-     * @param \phpbb\request\request $request
-     * @param \phpbb\template\template $template
-     * @param \phpbb\user $user
-     * @param string $root_path
-     * @param string $php_ext
-     * @param string $table
+     * @param \phpbb\auth\auth                    $auth
+     * @param \phpbb\config\config                $config
+     * @param \phpbb\controller\helper            $helper
+     * @param \phpbb\db\driver\driver_interface   $db
+     * @param \phpbb\log\log                      $log
+     * @param \phpbb\request\request              $request
+     * @param \phpbb\template\template            $template
+     * @param \phpbb\user                         $user
+     * @param \phpbb\language\language            $language
+     * @param string                              $root_path
+     * @param string                              $php_ext
+     * @param string                              $table
      *
      */
     public function __construct(auth $auth, config $config, helper $helper, driver_interface $db, log $log, request $request,
-                                template $template, user $user, $root_path, $php_ext, $table)
+                                template $template, language $language, user $user, $root_path, $php_ext, $table)
     {
         $this->auth = $auth;
         $this->config = $config;
@@ -80,6 +85,7 @@ class editlog
         $this->log = $log;
         $this->request = $request;
         $this->template = $template;
+        $this->language = $language;
         $this->user = $user;
         $this->root_path = $root_path;
         $this->php_ext = $php_ext;
@@ -125,7 +131,7 @@ class editlog
 
 			if (count($options) != 2)
 			{
-				$content = $this->user->lang['EDITLOG_BAD_OPTIONS_COUNT'];
+				$content = $this->language->lang['EDITLOG_BAD_OPTIONS_COUNT'];
 			}
 			else
 			{
@@ -235,7 +241,7 @@ class editlog
                 }
                 else
                 {
-                    confirm_box(false, $this->user->lang('CONFIRM_OPERATION'), build_hidden_fields(array(
+                    confirm_box(false, $this->language->lang('CONFIRM_OPERATION'), build_hidden_fields(array(
                         'option'	=> $edit_id_list,
                         'delete'		=> true,
                     )));
@@ -295,7 +301,7 @@ class editlog
 			{
 				$edit_array = array(
 					'EDIT_TIME' => $this->user->format_date($original['post_time']),
-					'EDIT_REASON' => "<strong>{$this->user->lang['ORIGINAL_MESSAGE']}</strong>",
+					'EDIT_REASON' => "<strong>{$this->language->lang['ORIGINAL_MESSAGE']}</strong>",
 					'USERNAME' => get_username_string('full', $original['p_user_id'], $original['p_username'], $original['p_user_colour']),
 				);
 			}
@@ -351,6 +357,6 @@ class editlog
             'S_DELETE' => $this->auth->acl_get('m_delete_editlog', $forum_id),
         ));
 
-        return $this->helper->render('editlog_body.html', $this->user->lang['EDIT_LOG']);
+        return $this->helper->render('editlog_body.html', $this->language->lang['EDIT_LOG']);
     }
 }

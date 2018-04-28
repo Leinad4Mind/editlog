@@ -12,6 +12,7 @@ services:
             - '@log'
             - '@request'
             - '@template'
+            - '@language'
             - '@user'
             - '%core.root_path%'
             - '%core.php_ext%'
@@ -23,6 +24,7 @@ services:
             - '@controller.helper'
             - '@dbal.conn'
             - '@request'
+            - '@language'
             - '@user'
             - '%towen.editlog.tables.editlog%'
         tags:
