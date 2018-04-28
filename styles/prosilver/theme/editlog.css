@@ -1,5 +1,5 @@
 #edit-compare th{
-	padding: 5px 0;
+    padding: 5px 0;
 }
 
 #edit-compare {
@@ -12,32 +12,32 @@
 }
 
 #edit-content span {
-	padding: 1px 0.8em;
-	margin: 1px;
+    padding: 1px 0.8em;
+    margin: 1px;
 }
 
 .ins {
-	background-color: #b5ffa5;
+    background-color: #b5ffa5;
     color: green;
 }
 
 .ins::before {
-	content: " + ";
-	color: green;
+    content: " + ";
+    color: green;
 }
 
 .del {
-	background-color: #ffc8b9;
+    background-color: #ffc8b9;
     color: red;
 }
 
 .del::before {
-	content: " - ";
-	color: red;
+    content: " - ";
+    color: red;
 }
 
 .edit-user, .edit-time, .old-post, .new-post, .edit-delete, .edit-check {
-	text-align: center;
+    text-align: center;
 }
 
 #edit-compare input.button1 {
