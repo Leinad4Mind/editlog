@@ -35,7 +35,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-    'ACL_U_NO_EDITLOG'		=> "Saab keelata muudatuse logi",
+    'ACL_U_NO_EDITLOG'			=> "Saab keelata muudatuse logi",
     'ACL_M_VIEW_EDITLOG'		=> "Saab vaadata muudatuse logi",
     'ACL_M_DELETE_EDITLOG'		=> "Saab kustutada muudatuste logi kirjeid",
 ));

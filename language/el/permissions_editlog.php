@@ -34,7 +34,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-    'ACL_U_NO_EDITLOG'		=> "Μπορεί να απενεργοποιήσει το ιστορικό αλλαγών",
+    'ACL_U_NO_EDITLOG'			=> "Μπορεί να απενεργοποιήσει το ιστορικό αλλαγών",
     'ACL_M_VIEW_EDITLOG'		=> "Μπορεί να δει το ιστορικό αλλαγών",
     'ACL_M_DELETE_EDITLOG'		=> "Μπορεί να διαγράψει εγγραφές του ιστορικού αλλαγών",
 ));

@@ -34,7 +34,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-    'ACL_U_NO_EDITLOG'		=> "Kann die Versions-Historie ausschalten",
+    'ACL_U_NO_EDITLOG'			=> "Kann die Versions-Historie ausschalten",
     'ACL_M_VIEW_EDITLOG'		=> "Kann die Versions-Historie einsehen",
     'ACL_M_DELETE_EDITLOG'		=> "Kann Einträge aus der Versions-Historie löschen",
 ));

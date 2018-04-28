@@ -34,7 +34,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-    'ACL_U_NO_EDITLOG'		=> "Puede desactivar el registro de ediciones",
+    'ACL_U_NO_EDITLOG'			=> "Puede desactivar el registro de ediciones",
     'ACL_M_VIEW_EDITLOG'		=> "Puede ver el registro de ediciones",
     'ACL_M_DELETE_EDITLOG'		=> "Puede borrar  entradas del registro de ediciones",
 ));
