@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * Edit Log
@@ -13,6 +14,11 @@ namespace towen\editlog\event;
  * @ignore
  */
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use phpbb\auth\auth;
+use phpbb\controller\helper;
+use phpbb\db\driver\driver_interface;
+use phpbb\request\request;
+use phpbb\user;
 
 /**
  * Event listener
@@ -61,8 +67,7 @@ class main_listener implements EventSubscriberInterface
      * @param \phpbb\user               $user
      * @param string                    $table
      */
-    public function __construct(\phpbb\auth\auth $auth, \phpbb\controller\helper $helper, \phpbb\db\driver\driver_interface $db,
-                                \phpbb\request\request $request, \phpbb\user $user, $table)
+    public function __construct(auth $auth, helper $helper, driver_interface $db, request $request, user $user, $table)
     {
         $this->auth = $auth;
         $this->helper = $helper;
