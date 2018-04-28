@@ -18,6 +18,7 @@ use phpbb\auth\auth;
 use phpbb\controller\helper;
 use phpbb\db\driver\driver_interface;
 use phpbb\request\request;
+use phpbb\language\language;
 use phpbb\user;
 
 /**
@@ -28,14 +29,14 @@ class main_listener implements EventSubscriberInterface
     static public function getSubscribedEvents()
     {
         return array(
-            'core.user_setup' => 'load_language_on_setup',
-            'core.permissions' => 'add_permission',
-            'core.delete_posts_in_transaction_before' => 'delete_posts',
-            'core.modify_submit_post_data' => 'modify_submit_post_data',
-            'core.viewtopic_post_rowset_data' => 'viewtopic_post_rowset_data',
-            'core.viewtopic_modify_post_row' => 'viewtopic_modify_post_row',
-            'core.posting_modify_template_vars' => 'posting_modify_template_vars',
-            'core.submit_post_modify_sql_data' => 'post_modify_sql_data',
+            'core.user_setup' 							 => 'load_language_on_setup',
+            'core.permissions' 							 => 'add_permission',
+            'core.delete_posts_in_transaction_before'	 => 'delete_posts',
+            'core.modify_submit_post_data'				 => 'modify_submit_post_data',
+            'core.viewtopic_post_rowset_data'			 => 'viewtopic_post_rowset_data',
+            'core.viewtopic_modify_post_row'			 => 'viewtopic_modify_post_row',
+            'core.posting_modify_template_vars'			 => 'posting_modify_template_vars',
+            'core.submit_post_modify_sql_data'			 => 'post_modify_sql_data',
         );
     }
 
@@ -51,6 +52,9 @@ class main_listener implements EventSubscriberInterface
     /* @var \phpbb\request\request */
     private $request;
 
+    /* @var \phpbb\language\language */
+    protected $language;
+
     /* @var \phpbb\user */
     protected $user;
 
@@ -60,19 +64,21 @@ class main_listener implements EventSubscriberInterface
     /**
      * Constructor
      *
-     * @param \phpbb\auth\auth          $auth
-     * @param \phpbb\controller\helper  $helper
+     * @param \phpbb\auth\auth                    $auth
+     * @param \phpbb\controller\helper            $helper
      * @param \phpbb\db\driver\driver_interface   $db
-     * @param \phpbb\request\request    $request
-     * @param \phpbb\user               $user
-     * @param string                    $table
+     * @param \phpbb\request\request              $request
+     * @param \phpbb\language\language            $language
+     * @param \phpbb\user                         $user
+     * @param string                              $table
      */
-    public function __construct(auth $auth, helper $helper, driver_interface $db, request $request, user $user, $table)
+    public function __construct(auth $auth, helper $helper, driver_interface $db, request $request, language $language, user $user, $table)
     {
         $this->auth = $auth;
         $this->helper = $helper;
         $this->db = $db;
         $this->request = $request;
+        $this->language = $language;
         $this->user = $user;
         $this->table = $table;
     }
@@ -124,7 +130,7 @@ class main_listener implements EventSubscriberInterface
         if ($event['row']['post_edit_log'] && $this->auth->acl_get('m_view_editlog', $event['row']['forum_id']))
         {
             $url = $this->helper->route('towen_editlog_controller', array('post_id' => $post_row['POST_ID']));
-            $post_row['EDITED_MESSAGE'] .= $this->user->lang('VIEW_EDIT_LOG', $url);
+            $post_row['EDITED_MESSAGE'] .= $this->language->lang('VIEW_EDIT_LOG', $url);
         }
 
         $event['post_row'] = $post_row;
@@ -167,12 +173,13 @@ class main_listener implements EventSubscriberInterface
                 $sql_data[POSTS_TABLE]['sql']['post_edit_log'] = true;
 
 				$insert_array = array(
-					'post_id'	=> $event['data']['post_id'],
-					'user_id'	=> $old_post['post_edit_user'],
-					'old_text'	=> $old_post['post_text'],
-					'old_subject'	=> $old_post['post_subject'],
-					'edit_reason'	=> $old_post['post_edit_reason'],
-					'edit_time'	=> $old_post['post_edit_time'],
+					'post_id'		=> $event['data']['post_id'],
+					'user_id'		=> $old_post['post_edit_user'],
+					'old_text'		=> preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xef\xbf\xbd", $old_post['post_text']),
+					'old_subject'	=> preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xef\xbf\xbd", $old_post['post_subject']),
+					'edit_reason'	=> preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xef\xbf\xbd", $old_post['post_edit_reason']),
+					'edit_time'		=> $old_post['post_edit_time'],
+					
 				);
 
 				$sql = 'INSERT INTO ' . $this->table . ' ' . $this->db->sql_build_array('INSERT', $insert_array);
