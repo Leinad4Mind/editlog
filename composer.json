@@ -1,17 +1,24 @@
 {
-	"name": "towen/editlog",
-	"type": "phpbb-extension",
-	"description": "Allows moderators to view a history of edits to a message",
-    "homepage": "https://phpbb-es.com/",
-    "version": "1.2.0",
-    "time": "2016-05-08",
+    "name": "towen/editlog",
+    "type": "phpbb-extension",
+    "description": "Allows moderators to view a history of edits to a message",
+    "homepage": "https://leinad4mind.top/forum",
+    "version": "1.3.0",
+    "time": "2018-05-08",
     "license": "GPL-2.0",
-    "authors": [{
+    "authors": [
+    {
+        "name": "Leinad4Mind",
+        "homepage": "https://leinad4mind.top/forum",
+        "role": "Developer"
+    },
+    {
         "name": "Pedro Almirall",
         "email": "towenpa@gmail.com",
         "homepage": "https://phpbb-es.com/",
-        "role": "Lead Developer"
-    }],
+        "role": "Original Developer"
+    }
+    ],
     "require": {
         "php": ">=5.3.3"
     },
@@ -21,7 +28,7 @@
     "extra": {
         "display-name": "Post Edit Log",
         "soft-require": {
-            "phpbb/phpbb": ">=3.1.7-RC1,<3.2@dev"
+            "phpbb/phpbb": ">=3.1.7-RC1,<3.3"
         }
     }
 }
