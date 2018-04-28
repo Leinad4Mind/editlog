@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * Edit Log
@@ -9,6 +10,14 @@
 
 namespace towen\editlog\controller;
 use phpbb\exception\http_exception;
+use phpbb\auth\auth;
+use phpbb\config\config;
+use phpbb\controller\helper;
+use phpbb\db\driver\driver_interface;
+use phpbb\log\log;
+use phpbb\request\request;
+use phpbb\template\template;
+use phpbb\user;
 
 class editlog
 {
@@ -61,10 +70,8 @@ class editlog
      * @param string $table
      *
      */
-    public function __construct(\phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\controller\helper $helper,
-                                \phpbb\db\driver\driver_interface $db, \phpbb\log\log $log, \phpbb\request\request $request,
-                                \phpbb\template\template $template, \phpbb\user $user,
-                                $root_path, $php_ext, $table)
+    public function __construct(auth $auth, config $config, helper $helper, driver_interface $db, log $log, request $request,
+                                template $template, user $user, $root_path, $php_ext, $table)
     {
         $this->auth = $auth;
         $this->config = $config;
